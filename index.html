@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HUSH</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤫</text></svg>">
+</head>
+<body>
+    <!-- Game Canvas -->
+    <canvas id="gameCanvas"></canvas>
+
+    <!-- Overlay UI -->
+    <div id="overlay" class="overlay">
+        <!-- Main Menu -->
+        <div id="menuScreen" class="screen active">
+            <!-- Atmospheric Corner Spider Webs -->
+            <svg class="spider-web top-left" viewBox="0 0 200 200" fill="none">
+                <path d="M0,0 L200,0 M0,0 L185,55 M0,0 L145,115 M0,0 L95,165 M0,0 L40,190 M0,0 L0,200" stroke="rgba(215, 230, 255, 0.35)" stroke-width="1.2"/>
+                <path d="M35,0 Q30,16 25,25 Q16,30 0,35" stroke="rgba(195, 215, 240, 0.3)" stroke-width="0.9"/>
+                <path d="M70,0 Q62,32 50,50 Q32,62 0,70" stroke="rgba(195, 215, 240, 0.3)" stroke-width="0.9"/>
+                <path d="M110,0 Q100,50 78,78 Q50,100 0,110" stroke="rgba(195, 215, 240, 0.28)" stroke-width="0.9"/>
+                <path d="M150,0 Q138,68 106,106 Q68,138 0,150" stroke="rgba(195, 215, 240, 0.25)" stroke-width="0.9"/>
+                <path d="M190,0 Q174,86 135,135 Q86,174 0,190" stroke="rgba(195, 215, 240, 0.22)" stroke-width="0.8"/>
+            </svg>
+            <svg class="spider-web top-right" viewBox="0 0 200 200" fill="none">
+                <path d="M200,0 L0,0 M200,0 L15,55 M200,0 L55,115 M200,0 L105,165 M200,0 L160,190 M200,0 L200,200" stroke="rgba(215, 230, 255, 0.35)" stroke-width="1.2"/>
+                <path d="M165,0 Q170,16 175,25 Q184,30 200,35" stroke="rgba(195, 215, 240, 0.3)" stroke-width="0.9"/>
+                <path d="M130,0 Q138,32 150,50 Q168,62 200,70" stroke="rgba(195, 215, 240, 0.3)" stroke-width="0.9"/>
+                <path d="M90,0 Q100,50 122,78 Q150,100 200,110" stroke="rgba(195, 215, 240, 0.28)" stroke-width="0.9"/>
+                <path d="M50,0 Q62,68 94,106 Q132,138 200,150" stroke="rgba(195, 215, 240, 0.25)" stroke-width="0.9"/>
+                <path d="M10,0 Q26,86 65,135 Q114,174 200,190" stroke="rgba(195, 215, 240, 0.22)" stroke-width="0.8"/>
+            </svg>
+            <svg class="spider-web bottom-left" viewBox="0 0 200 200" fill="none">
+                <path d="M0,200 L200,200 M0,200 L180,145 M0,200 L140,90 M0,200 L90,40 M0,200 L0,0" stroke="rgba(215, 230, 255, 0.28)" stroke-width="1.1"/>
+                <path d="M40,200 Q35,182 28,172 Q18,165 0,160" stroke="rgba(195, 215, 240, 0.25)" stroke-width="0.8"/>
+                <path d="M85,200 Q74,162 58,142 Q38,126 0,120" stroke="rgba(195, 215, 240, 0.22)" stroke-width="0.8"/>
+                <path d="M135,200 Q118,142 92,112 Q60,88 0,80" stroke="rgba(195, 215, 240, 0.2)" stroke-width="0.8"/>
+                <path d="M185,200 Q160,120 125,82 Q82,50 0,40" stroke="rgba(195, 215, 240, 0.18)" stroke-width="0.8"/>
+            </svg>
+
+            <!-- Warning Tagline Header -->
+            <div class="menu-tagline-badge">
+                <span class="pulse-dot"></span>
+                <span>SECTOR 4 COLLAPSED SUBWAY &bull; THE LISTENER AWAKENS</span>
+            </div>
+
+            <!-- The Listener's glowing red eyes watching behind title -->
+            <div class="menu-eyes">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+            </div>
+
+            <!-- Horror Title -->
+            <h1 class="game-title glitch-text" data-text="HUSH">HUSH</h1>
+            <p class="subtitle">The loudest thing in the room is you.</p>
+            <p class="menu-lore-hint">"She never stopped crying in the dark. He never stopped running. And now... he hears every breath you take."</p>
+
+            <div class="menu-divider"></div>
+
+            <!-- Horror Action Buttons -->
+            <div class="menu-action-buttons">
+                <button id="soloBtn" class="menu-btn primary horror-btn">
+                    <span class="btn-icon">💀</span>
+                    <span class="btn-label">SOLO EXPEDITION</span>
+                </button>
+                <button id="createGroupBtn" class="menu-btn secondary horror-btn">
+                    <span class="btn-icon">📻</span>
+                    <span class="btn-label">CREATE SQUAD LOBBY</span>
+                </button>
+                <button id="joinGroupBtn" class="menu-btn secondary horror-btn">
+                    <span class="btn-icon">🔗</span>
+                    <span class="btn-label">JOIN SQUAD</span>
+                </button>
+            </div>
+
+            <p class="instruction pulse">Click anywhere or choose a mode to enter the silence</p>
+
+            <!-- Scene Context Indicators (Calling attention to running soul & dead girl) -->
+            <div class="scene-annotation left-annotation">
+                <span class="scene-dot soul-dot"></span>
+                <span>RUNNING SOUL: The Eternal Sprint</span>
+            </div>
+            <div class="scene-annotation right-annotation">
+                <span class="scene-dot girl-dot"></span>
+                <span>COLLAPSED RUBBLE: The Lost Girl & Memory Stone 💎</span>
+            </div>
+
+            <div class="controls-hint">
+                <p>🎙️ <b>Microphone</b> detects voice &bull; 🎧 Proximity 3D Voice enabled</p>
+                <p>Voice Keys: <b>T</b> Toggle Mic &bull; <b>V</b> (Hold to speak) &bull; <b>1</b> Whisper &bull; <b>2</b> Talk &bull; <b>3</b> Scream</p>
+            </div>
+            <div class="controls-pill-list">
+                <span class="pill"><b>WASD</b> Move</span>
+                <span class="pill"><b>Shift</b> Run</span>
+                <span class="pill"><b>C</b> Sneak</span>
+                <span class="pill"><b>Space</b> Hold Breath</span>
+                <span class="pill"><b>F</b> Flashlight</span>
+                <span class="pill"><b>E</b> Interact / Pick up</span>
+                <span class="pill"><b>G</b> Banish Ghost</span>
+                <span class="pill"><b>H</b> Hide</span>
+                <span class="pill"><b>T</b> Mic Mute</span>
+                <span class="pill"><b>M</b> Tactical Map</span>
+                <span class="pill"><b>Left Click</b> Throw Distraction</span>
+            </div>
+        </div>
+
+        <!-- Create Group Modal -->
+        <div id="groupModal" class="modal-overlay hidden">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h2 class="modal-title">CO-OP GROUP LOBBY</h2>
+                    <span class="modal-tag">P2P PROXIMITY VOICE</span>
+                </div>
+                <p class="modal-subtitle">Share this room code with your friends to join:</p>
+                <div class="code-container">
+                    <span id="roomCodeDisplay" class="room-code">GENERATING...</span>
+                    <button id="copyCodeBtn" class="modal-btn small">COPY CODE</button>
+                </div>
+                <div class="lobby-members">
+                    <div class="lobby-count-row">
+                        <span>CONNECTED SQUAD:</span>
+                        <span class="badge"><span id="playerCountDisplay">1</span> / 5 PLAYERS</span>
+                    </div>
+                    <ul id="lobbyPlayersList" class="players-list">
+                        <li class="player-item host">👑 You (Host) - Ready</li>
+                    </ul>
+                </div>
+                <div class="lobby-info">
+                    <p>• <b>Proximity Audio:</b> Teammates sound quieter and muffled as they move further away</p>
+                    <p>• <b>Danger Line:</b> Holding &ge; 2 memory stones tightens the red line by 1/50 simultaneously</p>
+                    <p>• <b>Ghost Hunting:</b> Listener chases for up to 10 seconds before cooling off</p>
+                    <p>• <b>Banish Ghost:</b> Find the glowing sacred relic in the Hospital Wing to destroy the ghost [G]</p>
+                </div>
+                <div class="modal-buttons">
+                    <button id="startGroupGameBtn" class="modal-btn primary">START CO-OP GAME</button>
+                    <button id="cancelGroupBtn" class="modal-btn cancel">LEAVE LOBBY</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Join Group Modal -->
+        <div id="joinModal" class="modal-overlay hidden">
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h2 class="modal-title">JOIN SQUAD GROUP</h2>
+                </div>
+                <p class="modal-subtitle">Enter the room code shared by your friend:</p>
+                <div class="join-input-container">
+                    <input type="text" id="joinCodeInput" placeholder="HUSH-XXXX" maxlength="12" autocomplete="off" spellcheck="false">
+                </div>
+                <p id="joinStatus" class="modal-status"></p>
+                <div class="modal-buttons">
+                    <button id="confirmJoinBtn" class="modal-btn primary">CONNECT TO GROUP</button>
+                    <button id="cancelJoinBtn" class="modal-btn cancel">BACK</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calibration Screen -->
+        <div id="calibrationScreen" class="screen">
+            <h2 class="calibration-title">Calibrate Your Voice</h2>
+            <p id="calibrationInstruction" class="calibration-instruction">
+                Get ready...
+            </p>
+            <div class="calibration-bar-container">
+                <div id="calibrationBar" class="calibration-bar"></div>
+            </div>
+            <p id="calibrationPhase" class="calibration-phase"></p>
+            <div class="calibration-steps">
+                <span id="step1" class="step">Whisper</span>
+                <span class="step-arrow">→</span>
+                <span id="step2" class="step">Talk</span>
+                <span class="step-arrow">→</span>
+                <span id="step3" class="step">Shout</span>
+            </div>
+            <button id="skipCalibration" class="skip-btn">Skip Calibration</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="gameOverScreen" class="screen">
+            <!-- Red Horror Corner Spider Webs -->
+            <div class="web-corner web-top-left" aria-hidden="true">
+                <svg viewBox="0 0 100 100">
+                    <path d="M0,0 L100,0 M0,0 L92,38 M0,0 L70,70 M0,0 L38,92 M0,0 L0,100" stroke="#bb1a1a" stroke-width="0.8" fill="none" opacity="0.65"/>
+                    <path d="M25,0 Q23,10 18,18 Q10,23 0,25" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M50,0 Q46,20 35,35 Q20,46 0,50" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M75,0 Q69,30 53,53 Q30,69 0,75" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M100,0 Q92,38 70,70 Q38,92 0,100" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                </svg>
+            </div>
+            <div class="web-corner web-top-right" aria-hidden="true">
+                <svg viewBox="0 0 100 100" style="transform: scaleX(-1);">
+                    <path d="M0,0 L100,0 M0,0 L92,38 M0,0 L70,70 M0,0 L38,92 M0,0 L0,100" stroke="#bb1a1a" stroke-width="0.8" fill="none" opacity="0.65"/>
+                    <path d="M25,0 Q23,10 18,18 Q10,23 0,25" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M50,0 Q46,20 35,35 Q20,46 0,50" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M75,0 Q69,30 53,53 Q30,69 0,75" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                    <path d="M100,0 Q92,38 70,70 Q38,92 0,100" stroke="#cc3333" stroke-width="0.6" fill="none" opacity="0.7"/>
+                </svg>
+            </div>
+            <div class="gameover-eyes">
+                <div class="eye left big weeping"></div>
+                <div class="eye right big weeping"></div>
+            </div>
+            <p class="gameover-text">"Don't leave me..."</p>
+            <p class="gameover-sub">THE LISTENER CLAIMED ANOTHER SOUL</p>
+            <p class="retry-text pulse">Press [R] to retry</p>
+        </div>
+
+        <!-- Victory Screen -->
+        <div id="victoryScreen" class="screen">
+            <h1 class="victory-title">Silence.</h1>
+            <p class="victory-text">
+                His red eyes faded to dark, quiet brown.<br>
+                The doll form cracked, and the shape of a tired, gentle man<br>
+                appeared for one breath before he turned to light.
+            </p>
+            <p class="victory-sub">You escaped.</p>
+            <p class="retry-text pulse">Press R to play again</p>
+        </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Entering the silence...</p>
+    </div>
+
+    <!-- Scripts (order matters) -->
+    <script src="js/peerjs.min.js"></script>
+    <script src="js/constants.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/story.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
